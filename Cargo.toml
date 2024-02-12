@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://rdiiorio.ch"
 repository = "https://github.com/Elderberryz/tic_rng_toe"
 license = "MIT"
-keywords = ["tic-tac-toe", "noughts and crosses", "Xs and Os", "tic-rng-toe", "random", "games", "command-line", "single-player"]
+keywords = ["tic-tac-toe", "noughts and crosses", "Xs and Os", "random", "games"]
 categories = ["games", "command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

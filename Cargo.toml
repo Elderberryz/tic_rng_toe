@@ -4,7 +4,6 @@ version = "0.1.0"
 authors = ["Raffael Di Iorio"]
 edition = "2021"
 description = "Implementation of tic-tac-toe for one player where the computer places his marks pseudorandomly."
-license = "MIT"
 readme = "README.md"
 homepage = "rdiiorio.ch"
 repository = "https://github.com/Elderberryz/tic_rng_toe"

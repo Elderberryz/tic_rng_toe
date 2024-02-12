@@ -1,0 +1,87 @@
+use rand::Rng;
+use std::io;
+use std::collections::HashMap;
+    
+fn main() {
+    let mut v: Vec<u8> = vec![1, 2, 3, 4, 5, 6, 7, 8, 9]; // This vector tracks the state of the game
+    let mut player: [u8; 9] = [0; 9]; // This array tracks the state of the game for the player
+    let mut computer: [u8; 9] = [0; 9]; // This array tracks the state of the game for the computer
+    let mut turn: u8 = 0; // tracking the number of turns
+    let mut board = String::from("   |   |  \n-----------\n   |   |  \n-----------\n   |   |  "); // This string represents the game board
+
+    let fields = HashMap::from([ // This hash maps the possible input values (1..9) to the indices in the string "board"
+	(1, 1),
+	(2, 5),
+	(3, 9),
+	(4, 24),
+	(5, 28),
+	(6, 32),
+	(7, 47),
+	(8, 51),
+	(9, 55)
+    ]);
+    
+    println!("Tic Tac Toe!");
+    println!(" 1 | 2 | 3\n-----------\n 4 | 5 | 6\n-----------\n 7 | 8 | 9");
+    println!("Enter a number between 1..9 to start the game!");
+    loop {
+	let mut number = String::new();
+
+	io::stdin()
+	    .read_line(&mut number)
+	    .expect("Failed to read line");
+
+	let number: u8 = match number.trim().parse() {
+	    Ok(num) => num,
+	    Err(_) => {
+		println!("Invalid input. Please enter a viable number.");
+		continue; },
+	};
+	if !v.contains(&number) {
+	    println!("Invalid input. Please enter a viable number.");
+	    continue;
+	}
+	turn += 1;
+	let field = fields.get(&number).copied().unwrap_or(0);
+	board = replace_char_at(&board, field, 'X');
+	v.retain(|x| x != &number);
+	player[usize::from(number) - 1] = 1;
+	println!("\nYour turn:");
+	println!("{}", board);
+	if turn >= 3 {
+	    if player[0] + player[1] + player[2] == 3 || player[0] + player[3] + player[6] == 3 || player[0] + player[4] + player[8] == 3 || player[3] + player[4] + player[5] == 3 || player[1] + player[4] + player[7] == 3 || player[2] + player[5] + player[8] == 3 || player[6] + player[7] + player[8] == 3 || player[2] + player[4] + player[6] == 3 {
+		println!("You won!");
+		break;
+	    } else if v.len() == 0 {
+		println!("Draw.");
+		break;
+	    }
+	}
+	let upper_bound: u8 = (v.len() - 1).try_into().unwrap();
+	let comp_index : u8 = rand::thread_rng().gen_range(1..=upper_bound);
+	let comp_size = usize::from(comp_index);
+	let comp_pick : u8 = v[comp_size];
+	println!("\n\nComputer turn:");
+	let comp_field = fields.get(&comp_pick).copied().unwrap_or(0);
+	board = replace_char_at(&board, comp_field, 'O');
+	v.retain(|x| x != &comp_pick);
+	computer[usize::from(comp_pick) - 1] = 1;
+	println!("{}", board);
+		if turn >= 3 {
+	    if computer[0] + computer[1] + computer[2] == 3 || computer[0] + computer[3] + computer[6] == 3 || computer[0] + computer[4] + computer[8] == 3 || computer[3] + computer[4] + computer[5] == 3 || computer[1] + computer[4] + computer[7] == 3 || computer[2] + computer[5] + computer[8] == 3 || computer[6] + computer[7] + computer[8] == 3 || computer[2] + computer[4] + computer[6] == 3 {
+		println!("Computer won.");
+		break;
+	    }
+	}
+    }
+}
+
+fn replace_char_at(s: &str, idx: u8, c: char) -> String {
+    let mut r = String::with_capacity(s.len());
+    for (i, d) in s.char_indices() {
+        r.push(if i == idx.into() { c } else { d });
+    }
+    r
+}
+
+

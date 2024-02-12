@@ -1,0 +1,13 @@
+Suggestions:
+-Exchange vector v by array
+-replace comp_pick by comp_input
+-replace comp_size by comp_index
+-In general: check variable names if they make sense.
+ToDo:
+2) Look for weaknesses in the program: are all bases covered?
+3) Refactor:
+-use more Rust idioms
+-which variables are really needed
+-add documentation
+4) Test: Is it possible to run exhaustive testing on the program?
+-By replacing the random computer pick by a second "input" and running all possible input combinations for tic tac toe
